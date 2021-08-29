@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
-class ProductCategory extends Model
+class ProductGalery extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'products_id',
+        'url'
     ];
 
-    public function products()
+    public function getUrlAttribute($url)
     {
-        return $this->hasMany(Product::class);
+        return config('app.url') . Storage::url($url);
     }
 }
