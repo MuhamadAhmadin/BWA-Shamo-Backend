@@ -110,4 +110,10 @@ class UserController extends Controller
             $user
         ], 'Profile berhasil diupdate');
     }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+        return ResponseFormatter::success($token, 'Token revoked, successfully logout');
+    }
 }
