@@ -20,7 +20,7 @@ class Product extends Model
 
     public function galleries()
     {
-        $this->hasMany(ProductGalery::class, 'products_id');
+        return $this->hasMany(ProductGalery::class, 'products_id');
     }
 
     public function category()
