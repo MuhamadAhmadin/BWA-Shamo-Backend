@@ -93,4 +93,21 @@ class UserController extends Controller
             $request->user()
         ], 'Data profile berhasil di ambil');
     }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,'. $user->id],
+            'username' => ['nullable', 'string', 'max:255', 'unique:users,username,' . $user->id],
+            'phone' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $user->update($request->all());
+
+        return ResponseFormatter::success([
+            $user
+        ], 'Profile berhasil diupdate');
+    }
 }
